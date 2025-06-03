@@ -1,0 +1,79 @@
+basePath: /
+definitions:
+  models.Task:
+    properties:
+      created_at:
+        type: string
+      deleted_at:
+        type: string
+      description:
+        type: string
+      done:
+        type: boolean
+      id:
+        type: integer
+      title:
+        type: string
+      updated_at:
+        type: string
+      user_id:
+        type: integer
+    type: object
+  models.User:
+    properties:
+      created_at:
+        type: string
+      deleted_at:
+        type: string
+      email:
+        type: string
+      first_name:
+        maxLength: 100
+        minLength: 2
+        type: string
+      id:
+        type: integer
+      last_name:
+        maxLength: 100
+        minLength: 2
+        type: string
+      tasks:
+        items:
+          $ref: '#/definitions/models.Task'
+        type: array
+      updated_at:
+        type: string
+    required:
+    - email
+    - first_name
+    - last_name
+    type: object
+host: localhost:8080
+info:
+  contact: {}
+  description: Esta es una API REST construida con Go y Gorilla Mux
+  title: Mi API en Go
+  version: "1.0"
+paths:
+  /usuarios:
+    get:
+      consumes:
+      - application/json
+      description: Retorna un listado de usuarios
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.User'
+            type: array
+        "500":
+          description: Error interno
+          schema:
+            type: string
+      summary: Obtiene todos los usuarios
+      tags:
+      - usuarios
+swagger: "2.0"
