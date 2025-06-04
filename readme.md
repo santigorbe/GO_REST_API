@@ -4,7 +4,7 @@
 ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-15-blue?logo=postgresql)
 ![Docker](https://img.shields.io/badge/Docker-ready-blue?logo=docker)
 ![Swagger](https://img.shields.io/badge/Swagger-UI-green?logo=swagger)
-![Tests[](https://img.shields.io/badge/Swagger-UI-green?logo=swagger)
+![Tests](https://img.shields.io/badge/Swagger-UI-green?logo=swagger)
 ![Logger](https://img.shields.io/badge/Swagger-UI-green?logo=swagger)
 
 > Una API RESTful escrita en Go usando el potente enrutador [Gorilla Mux](https://github.com/gorilla/mux), lista para producción con validaciones, pruebas, documentación interactiva y contenedores.
