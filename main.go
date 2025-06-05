@@ -31,15 +31,35 @@ func main() {
 
 	db.DBConnection()
 
-	db.DB.AutoMigrate(models.Task{}, models.User{})
+	log.Println("Migrating User model")
+	db.DB.AutoMigrate(&models.User{})
+	log.Println("Migrating Task model")
+	db.DB.AutoMigrate(&models.Task{})
+
 
 	router := routes.NewRouter()
+
+	router.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		w.Write([]byte("Welcome to the Go API!"))
+	}).Methods("GET")
 
 	router.PathPrefix("/docs").Handler(httpSwagger.WrapHandler)
 
 	handler := cors.Default().Handler(router)
 	port := os.Getenv("PORT")
-	http.ListenAndServe(":"+port, handler)
+	if port == "" {
+		port = "3000" // Default port if not set in .env
+		log.Println("No PORT environment variable detected, using default port 3000")
+	} else {
+		log.Println("Using PORT environment variable:", port)
+	}
+
+	log.Println("Starting server on port " + port)
+	err = http.ListenAndServe(":"+port, handler)
+	if err != nil {
+		log.Fatalf("Server failed to start: %v", err)
+	}
+
 	log.Println("Visit http://localhost:" + port)
 	log.Println("Visit http://localhost:" + port + "/docs for API documentation")
 }

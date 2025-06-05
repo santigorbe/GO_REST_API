@@ -17,5 +17,5 @@ func NewRouter() *mux.Router {
 	RegisterUsersRoutes(api)
 	RegisterTasksRoutes(api)
 
-	return api
+	return r
 }

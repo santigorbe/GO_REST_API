@@ -1,9 +1,7 @@
-version: "3.8"
-
 services:
   db:
-    image: postgres:15
-    container_name: pg_tasks
+    image: postgres:16.9-alpine3.22
+    container_name: gorm
     environment:
       POSTGRES_DB: gorm
       POSTGRES_USER: santi
@@ -21,7 +19,8 @@ services:
     ports:
       - "3000:3000"
     environment:
-      DATABASE_URL: postgres://postgres:postgres@db:5432/tasks_db?sslmode=disable
+      DATABASE_URL: postgres://santi:mysecretpassword@db:5432/gorm?sslmode=disable
+      PORT: 3000
     volumes:
       - .:/app
     restart: on-failure
