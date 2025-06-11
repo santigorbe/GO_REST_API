@@ -83,7 +83,7 @@ docker-compose up --build
 📚 Documentación Swagger
 Una vez que el servidor esté en marcha, visita:
 
-http://localhost:8080/swagger 🧭
+http://localhost:3000/docs 🧭
 
 🧪 Autor
 Desarrollado con Go por Santiago Gorbea 👨‍💻
