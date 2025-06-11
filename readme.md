@@ -13,7 +13,7 @@
 
 ## 📸 Vista Previa
 
-![preview](https://user-images.githubusercontent.com/your-image-path/swagger-ui-preview.png)
+![preview](https://github.com/santigorbe/GO_REST_API.git)
 *Swagger UI integrado para una documentación interactiva*
 
 ---
@@ -34,17 +34,38 @@
 
 ## 🧰 Estructura del Proyecto
 
-📁 /cmd
-📁 /internal
-├── /handler
-├── /service
-├── /repository
-├── /middleware
-📁 /pkg
-├── /logger
-├── /validator
-├── /swagger
-📄 go.mod
+📁 /controllers  
+├── /tasks.controller.go  
+├── /users.controller.go  
+📁 /db  
+├── /connection.go  
+📁 /docs  
+├── /docs.go  
+📁 /moddlewares  
+├── /errorHandler.go  
+├── /logger.go  
+📁 /models  
+├── /Task.go  
+├── /User.go  
+📁 /repository  
+├── /gorm.tasks.repo.go  
+├── /gorm.users.repo.go  
+├── /tasks.repository.go  
+├── /users.repository.go  
+📁 /routes  
+├── /index.routes.go  
+├── /tasks.routes.go  
+├── /users.routes.go  
+📁 /services  
+├── /tasks.services.go  
+├── /users.services.go  
+📁 /utils  
+├── /response.helper.go  
+📄 main.go  
+📄 .env  
+📄 docker-compose.yml  
+📄 Dockerfile  
+📄 go.mod  
 
 
 ---
