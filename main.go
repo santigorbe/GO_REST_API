@@ -43,8 +43,10 @@ func main() {
 		w.Write([]byte("Welcome to the Go API!"))
 	}).Methods("GET")
 
-	router.PathPrefix("/docs").Handler(httpSwagger.WrapHandler)
-
+	router.PathPrefix("/docs/").Handler(httpSwagger.Handler(
+		httpSwagger.URL("http://localhost:3000/docs/swagger.json"),
+	))
+	
 	handler := cors.Default().Handler(router)
 	port := os.Getenv("PORT")
 	if port == "" {

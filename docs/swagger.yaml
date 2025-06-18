@@ -7,17 +7,24 @@ definitions:
       deleted_at:
         type: string
       description:
+        maxLength: 500
+        minLength: 2
         type: string
       done:
         type: boolean
       id:
         type: integer
       title:
+        maxLength: 100
+        minLength: 2
         type: string
       updated_at:
         type: string
       user_id:
         type: integer
+    required:
+    - description
+    - title
     type: object
   models.User:
     properties:
@@ -48,13 +55,48 @@ definitions:
     - first_name
     - last_name
     type: object
-host: localhost:8080
+host: localhost:3000
 info:
   contact: {}
   description: Esta es una API REST construida con Go y Gorilla Mux
   title: Mi API en Go
   version: "1.0"
 paths:
+  /tareas:
+    get:
+      consumes:
+      - application/json
+      description: Retorna un listado de tareas filtradas por parámetros
+      parameters:
+      - default: 10
+        description: Limit
+        in: query
+        name: limit
+        type: integer
+      - default: 0
+        description: Offset
+        in: query
+        name: offset
+        type: integer
+      - default: '""'
+        description: Search
+        in: query
+        name: search
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Task'
+        "500":
+          description: Error al obtener tareas
+          schema:
+            type: string
+      summary: Obtiene tareas filtradas
+      tags:
+      - tareas
   /usuarios:
     get:
       consumes:
@@ -70,10 +112,134 @@ paths:
               $ref: '#/definitions/models.User'
             type: array
         "500":
-          description: Error interno
+          description: Error getting users
           schema:
             type: string
       summary: Obtiene todos los usuarios
       tags:
       - usuarios
+    post:
+      consumes:
+      - application/json
+      description: Crea un nuevo usuario en el sistema
+      parameters:
+      - description: User object
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/models.User'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/models.User'
+        "400":
+          description: Invalid request payload
+          schema:
+            type: string
+        "500":
+          description: Error creating user
+          schema:
+            type: string
+      summary: Crea un nuevo usuario
+      tags:
+      - usuarios
+  /usuarios/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Elimina un usuario específico del sistema
+      parameters:
+      - description: User ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: No Content
+        "404":
+          description: User not found
+          schema:
+            type: string
+        "500":
+          description: Error deleting user
+          schema:
+            type: string
+      summary: Elimina un usuario por ID
+      tags:
+      - usuarios
+    get:
+      consumes:
+      - application/json
+      description: Retorna un usuario específico
+      parameters:
+      - description: User ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.User'
+        "404":
+          description: User not found
+          schema:
+            type: string
+        "500":
+          description: Error getting user
+          schema:
+            type: string
+      summary: Obtiene un usuario por ID
+      tags:
+      - usuarios
+    put:
+      consumes:
+      - application/json
+      description: Actualiza un usuario específico en el sistema
+      parameters:
+      - description: User ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: User object
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/models.User'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.User'
+        "400":
+          description: Invalid request payload
+          schema:
+            type: string
+        "404":
+          description: User not found
+          schema:
+            type: string
+        "500":
+          description: Error updating user
+          schema:
+            type: string
+      summary: Actualiza un usuario por ID
+      tags:
+      - usuarios
+schemes:
+- http
 swagger: "2.0"
