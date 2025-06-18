@@ -370,7 +370,7 @@ const docTemplate = `{
 var SwaggerInfo = &swag.Spec{
 	Version:          "1.0",
 	Host:             "localhost:3000",
-	BasePath:         "/",
+	BasePath:         "/api",
 	Schemes:          []string{"http"},
 	Title:            "Mi API en Go",
 	Description:      "Esta es una API REST construida con Go y Gorilla Mux",

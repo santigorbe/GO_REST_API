@@ -5,22 +5,20 @@ import (
 	"net/http"
 	"os"
 
-	httpSwagger "github.com/swaggo/http-swagger/v2"
-
 	"github.com/joho/godotenv"
 	"github.com/rs/cors"
 	"github.com/santigorbe/rest_golang/db"
-	_ "github.com/santigorbe/rest_golang/docs" // ← esta es tu carpeta generada
+	_ "github.com/santigorbe/rest_golang/docs"
 	"github.com/santigorbe/rest_golang/models"
 	"github.com/santigorbe/rest_golang/routes"
-	// httpSwagger "github.com/swaggo/http-swagger"
+	httpSwagger "github.com/swaggo/http-swagger/v2"
 )
 
 // @title Mi API en Go
 // @version 1.0
 // @description Esta es una API REST construida con Go y Gorilla Mux
 // @host localhost:3000
-// @BasePath /
+// @BasePath /api
 // @schemes http
 func main() {
 	log.SetPrefix("[API-GO] ")
@@ -31,13 +29,12 @@ func main() {
 		log.Println(".env loading error:", err)
 	}
 
-	db.DBConnection()
+	if err := db.DBConnection(); err != nil {
+		log.Fatalf("DB connection failed: %v", err)
+	}
 
-	log.Println("Migrating User model")
 	db.DB.AutoMigrate(&models.User{})
-	log.Println("Migrating Task model")
 	db.DB.AutoMigrate(&models.Task{})
-
 
 	router := routes.NewRouter()
 
@@ -46,22 +43,22 @@ func main() {
 	}).Methods("GET")
 
 	router.PathPrefix("/docs/").Handler(httpSwagger.WrapHandler)
+	router.HandleFunc("/docs", func(w http.ResponseWriter, r *http.Request) {
+		http.Redirect(w, r, "/docs/index.html", http.StatusMovedPermanently)
+	})
 
 	handler := cors.Default().Handler(router)
+
 	port := os.Getenv("PORT")
 	if port == "" {
-		port = "3000" // Default port if not set in .env
+		port = "3000"
 		log.Println("No PORT environment variable detected, using default port 3000")
 	} else {
 		log.Println("Using PORT environment variable:", port)
 	}
 
 	log.Println("Starting server on port " + port)
-	err = http.ListenAndServe(":"+port, handler)
-	if err != nil {
+	if err := http.ListenAndServe(":"+port, handler); err != nil {
 		log.Fatalf("Server failed to start: %v", err)
 	}
-
-	log.Println("Visit http://localhost:" + port)
-	log.Println("Visit http://localhost:" + port + "/docs for API documentation")
 }
