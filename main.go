@@ -5,13 +5,15 @@ import (
 	"net/http"
 	"os"
 
+	httpSwagger "github.com/swaggo/http-swagger/v2"
+
 	"github.com/joho/godotenv"
 	"github.com/rs/cors"
 	"github.com/santigorbe/rest_golang/db"
 	_ "github.com/santigorbe/rest_golang/docs" // ← esta es tu carpeta generada
 	"github.com/santigorbe/rest_golang/models"
 	"github.com/santigorbe/rest_golang/routes"
-	httpSwagger "github.com/swaggo/http-swagger"
+	// httpSwagger "github.com/swaggo/http-swagger"
 )
 
 // @title Mi API en Go
@@ -43,10 +45,8 @@ func main() {
 		w.Write([]byte("Welcome to the Go API!"))
 	}).Methods("GET")
 
-	router.PathPrefix("/docs/").Handler(httpSwagger.Handler(
-		httpSwagger.URL("http://localhost:3000/docs/swagger.json"),
-	))
-	
+	router.PathPrefix("/docs/").Handler(httpSwagger.WrapHandler)
+
 	handler := cors.Default().Handler(router)
 	port := os.Getenv("PORT")
 	if port == "" {
