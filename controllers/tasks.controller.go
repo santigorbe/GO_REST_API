@@ -27,7 +27,7 @@ type TaskHandler struct {
 // @Param search query string false "Search" default("")
 // @Success 200 {object} models.Task
 // @Failure 500 {string} string "Error al obtener tareas"
-// @Router /tareas [get]
+// @Router /tasks [get]
 func (h *TaskHandler) GetTasksHandler(w http.ResponseWriter, r *http.Request) {
 	// Extraer parámetros
 	limit, offset := 10, 0
@@ -50,16 +50,16 @@ func (h *TaskHandler) GetTasksHandler(w http.ResponseWriter, r *http.Request) {
 	utils.RespondPaginated(w, tasks, total, offset+limit)
 }
 
-// @Summary Obtiene un usuario por ID
-// @Description Retorna un usuario específico por su ID
-// @Tags usuarios
+// @Summary Obtiene una tarea por su ID
+// @Description Obtiene una tarea por su ID
+// @Tags tareas
 // @Accept  json
 // @Produce  json
-// @Param id path string true "User ID"
-// @Success 200 {object} models.User
-// @Failure 404 {string} string "User not found"
-// @Failure 500 {string} string "Error getting user"
-// @Router /usuarios/{id} [get]
+// @Param id path string true "Task ID"
+// @Success 200 {object} models.Task
+// @Failure 404 {string} string "Task not found"
+// @Failure 500 {string} string "Error getting task"
+// @Router /task/{id} [get]
 func (h *TaskHandler) GetTaskHandler(w http.ResponseWriter, r *http.Request) {
 	id := mux.Vars(r)["id"]
 
@@ -75,16 +75,16 @@ func (h *TaskHandler) GetTaskHandler(w http.ResponseWriter, r *http.Request) {
 	utils.RespondSuccess(w, task)
 }
 
-// @Summary Crea un nuevo usuario
-// @Description Crea un nuevo usuario con los datos proporcionados
-// @Tags usuarios
+// @Summary Crea una nueva tarea
+// @Description Crea una nueva tarea con los datos proporcionados
+// @Tags tareas
 // @Accept  json
 // @Produce  json
-// @Param user body models.User true "User data"
-// @Success 200 {object} models.User
+// @Param task body models.Task true "Task data"
+// @Success 200 {object} models.Task
 // @Failure 400 {string} string "Invalid request payload"
-// @Failure 500 {string} string "Error creating user"
-// @Router /usuarios [post]
+// @Failure 500 {string} string "Error creating task"
+// @Router /tasks [post]
 func (h *TaskHandler) CreateTaskHandler(w http.ResponseWriter, r *http.Request) {
 	var task models.Task
 	if err := json.NewDecoder(r.Body).Decode(&task); err != nil {
@@ -100,17 +100,17 @@ func (h *TaskHandler) CreateTaskHandler(w http.ResponseWriter, r *http.Request) 
 	utils.RespondSuccess(w, createdTask)
 }
 
-// @Summary Actualiza un usuario existente
-// @Description Actualiza un usuario existente con los datos proporcionados
-// @Tags usuarios
+// @Summary Actualiza una tarea existente
+// @Description Actualiza una tarea existente con los datos proporcionados
+// @Tags tareas
 // @Accept  json
 // @Produce  json
-// @Param id path string true "User ID"
-// @Param user body models.User true "User data"
-// @Success 200 {object} models.User
+// @Param id path string true "Task ID"
+// @Param task body models.Task true "Task data"
+// @Success 200 {object} models.Task
 // @Failure 400 {string} string "Invalid request payload"
-// @Failure 404 {string} string "User not found"
-// @Failure 500 {string} string "Error updating user"
+// @Failure 404 {string} string "Task not found"
+// @Failure 500 {string} string "Error updating task"
 // @Router /usuarios/{id} [put]
 func (h *TaskHandler) UpdateTaskHandler(w http.ResponseWriter, r *http.Request) {
 	id := mux.Vars(r)["id"]
@@ -133,16 +133,16 @@ func (h *TaskHandler) UpdateTaskHandler(w http.ResponseWriter, r *http.Request) 
 	utils.RespondSuccess(w, updatedTask)
 }
 
-// @Summary Elimina un usuario
-// @Description Elimina un usuario por su ID
-// @Tags usuarios
+// @Summary Elimina una tarea existente
+// @Description Elimina una tarea existente por su ID
+// @Tags tareas
 // @Accept  json
 // @Produce  json
-// @Param id path string true "User ID"
-// @Success 200 {string} string "User deleted successfully"
-// @Failure 404 {string} string "User not found"
-// @Failure 500 {string} string "Error deleting user"
-// @Router /usuarios/{id} [delete]
+// @Param id path string true "Task ID"
+// @Success 200 {object} models.Task
+// @Failure 404 {string} string "Task not found"
+// @Failure 500 {string} string "Error deleting task"
+// @Router /task/{id} [delete]
 func (h *TaskHandler) DeleteTaskHandler(w http.ResponseWriter, r *http.Request) {
 	id := mux.Vars(r)["id"]
 

@@ -62,7 +62,64 @@ info:
   title: Mi API en Go
   version: "1.0"
 paths:
-  /tareas:
+  /task/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Elimina una tarea existente por su ID
+      parameters:
+      - description: Task ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Task'
+        "404":
+          description: Task not found
+          schema:
+            type: string
+        "500":
+          description: Error deleting task
+          schema:
+            type: string
+      summary: Elimina una tarea existente
+      tags:
+      - tareas
+    get:
+      consumes:
+      - application/json
+      description: Obtiene una tarea por su ID
+      parameters:
+      - description: Task ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Task'
+        "404":
+          description: Task not found
+          schema:
+            type: string
+        "500":
+          description: Error getting task
+          schema:
+            type: string
+      summary: Obtiene una tarea por su ID
+      tags:
+      - tareas
+  /tasks:
     get:
       consumes:
       - application/json
@@ -97,57 +154,36 @@ paths:
       summary: Obtiene tareas filtradas
       tags:
       - tareas
-  /usuarios:
-    get:
+    post:
       consumes:
       - application/json
-      description: Retorna un listado de usuarios
+      description: Crea una nueva tarea con los datos proporcionados
+      parameters:
+      - description: Task data
+        in: body
+        name: task
+        required: true
+        schema:
+          $ref: '#/definitions/models.Task'
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            items:
-              $ref: '#/definitions/models.User'
-            type: array
-        "500":
-          description: Error getting users
-          schema:
-            type: string
-      summary: Obtiene todos los usuarios
-      tags:
-      - usuarios
-    post:
-      consumes:
-      - application/json
-      description: Crea un nuevo usuario en el sistema
-      parameters:
-      - description: User object
-        in: body
-        name: user
-        required: true
-        schema:
-          $ref: '#/definitions/models.User'
-      produces:
-      - application/json
-      responses:
-        "201":
-          description: Created
-          schema:
-            $ref: '#/definitions/models.User'
+            $ref: '#/definitions/models.Task'
         "400":
           description: Invalid request payload
           schema:
             type: string
         "500":
-          description: Error creating user
+          description: Error creating task
           schema:
             type: string
-      summary: Crea un nuevo usuario
+      summary: Crea una nueva tarea
       tags:
-      - usuarios
-  /usuarios/{id}:
+      - tareas
+  /user/{id}:
     delete:
       consumes:
       - application/json
@@ -240,6 +276,95 @@ paths:
       summary: Actualiza un usuario por ID
       tags:
       - usuarios
+  /users:
+    get:
+      consumes:
+      - application/json
+      description: Retorna un listado de usuarios
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.User'
+            type: array
+        "500":
+          description: Error getting users
+          schema:
+            type: string
+      summary: Obtiene todos los usuarios
+      tags:
+      - usuarios
+    post:
+      consumes:
+      - application/json
+      description: Crea un nuevo usuario en el sistema
+      parameters:
+      - description: User object
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/models.User'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/models.User'
+        "400":
+          description: Invalid request payload
+          schema:
+            type: string
+        "500":
+          description: Error creating user
+          schema:
+            type: string
+      summary: Crea un nuevo usuario
+      tags:
+      - usuarios
+  /usuarios/{id}:
+    put:
+      consumes:
+      - application/json
+      description: Actualiza una tarea existente con los datos proporcionados
+      parameters:
+      - description: Task ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Task data
+        in: body
+        name: task
+        required: true
+        schema:
+          $ref: '#/definitions/models.Task'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Task'
+        "400":
+          description: Invalid request payload
+          schema:
+            type: string
+        "404":
+          description: Task not found
+          schema:
+            type: string
+        "500":
+          description: Error updating task
+          schema:
+            type: string
+      summary: Actualiza una tarea existente
+      tags:
+      - tareas
 schemes:
 - http
 swagger: "2.0"

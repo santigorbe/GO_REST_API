@@ -21,7 +21,7 @@ type UserHandler struct {
 // @Produce  json
 // @Success 200 {array} models.User
 // @Failure 500 {string} string "Error getting users"
-// @Router /usuarios [get]
+// @Router /users [get]
 func (h *UserHandler) GetUsersHandler(w http.ResponseWriter, r *http.Request) {
 	users, err := h.Service.GetUsers()
 	if err != nil {
@@ -40,7 +40,7 @@ func (h *UserHandler) GetUsersHandler(w http.ResponseWriter, r *http.Request) {
 // @Success 200 {object} models.User
 // @Failure 404 {string} string "User not found"
 // @Failure 500 {string} string "Error getting user"
-// @Router /usuarios/{id} [get]
+// @Router /user/{id} [get]
 func (h *UserHandler) GetUserHandler(w http.ResponseWriter, r *http.Request) {
 	id := mux.Vars(r)["id"]
 
@@ -65,7 +65,7 @@ func (h *UserHandler) GetUserHandler(w http.ResponseWriter, r *http.Request) {
 // @Success 201 {object} models.User
 // @Failure 400 {string} string "Invalid request payload"
 // @Failure 500 {string} string "Error creating user"
-// @Router /usuarios [post]
+// @Router /users [post]
 func (h *UserHandler) CreateUserHandler(w http.ResponseWriter, r *http.Request) {
 	var user models.User
 	if err := json.NewDecoder(r.Body).Decode(&user); err != nil {
@@ -89,7 +89,7 @@ func (h *UserHandler) CreateUserHandler(w http.ResponseWriter, r *http.Request) 
 // @Success 204 "No Content"
 // @Failure 404 {string} string "User not found"
 // @Failure 500 {string} string "Error deleting user"
-// @Router /usuarios/{id} [delete]
+// @Router /user/{id} [delete]
 func (h *UserHandler) DeleteUserHandler(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 
@@ -117,7 +117,7 @@ func (h *UserHandler) DeleteUserHandler(w http.ResponseWriter, r *http.Request) 
 // @Failure 400 {string} string "Invalid request payload"
 // @Failure 404 {string} string "User not found"
 // @Failure 500 {string} string "Error updating user"
-// @Router /usuarios/{id} [put]
+// @Router /user/{id} [put]
 func (h *UserHandler) UpdateUserHandler(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 

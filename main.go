@@ -43,9 +43,6 @@ func main() {
 	}).Methods("GET")
 
 	router.PathPrefix("/docs/").Handler(httpSwagger.WrapHandler)
-	router.HandleFunc("/docs", func(w http.ResponseWriter, r *http.Request) {
-		http.Redirect(w, r, "/docs/index.html", http.StatusMovedPermanently)
-	})
 
 	handler := cors.Default().Handler(router)
 
