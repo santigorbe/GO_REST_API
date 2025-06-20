@@ -7,12 +7,10 @@ import (
 	"gorm.io/gorm"
 )
 
-// var DSN string = os.Getenv("DATABASE_URL")
-
 var DB *gorm.DB
 
 func DBConnection() error {
-	DSN := "postgres://santi:mysecretpassword@host.docker.internal:5432/gorm?sslmode=disable"
+	DSN := "postgres://santi:mysecretpassword@db:5432/gorm?sslmode=disable"
 	var err error
 	log.Println("Connecting to DB: ", DSN)
 

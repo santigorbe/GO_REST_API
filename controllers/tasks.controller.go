@@ -111,7 +111,7 @@ func (h *TaskHandler) CreateTaskHandler(w http.ResponseWriter, r *http.Request) 
 // @Failure 400 {string} string "Invalid request payload"
 // @Failure 404 {string} string "Task not found"
 // @Failure 500 {string} string "Error updating task"
-// @Router /usuarios/{id} [put]
+// @Router /task/{id} [put]
 func (h *TaskHandler) UpdateTaskHandler(w http.ResponseWriter, r *http.Request) {
 	id := mux.Vars(r)["id"]
 

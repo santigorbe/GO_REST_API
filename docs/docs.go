@@ -58,6 +58,63 @@ const docTemplate = `{
                     }
                 }
             },
+            "put": {
+                "description": "Actualiza una tarea existente con los datos proporcionados",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "tareas"
+                ],
+                "summary": "Actualiza una tarea existente",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Task ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Task data",
+                        "name": "task",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.Task"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.Task"
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid request payload",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "404": {
+                        "description": "Task not found",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "500": {
+                        "description": "Error updating task",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            },
             "delete": {
                 "description": "Elimina una tarea existente por su ID",
                 "consumes": [
@@ -406,65 +463,6 @@ const docTemplate = `{
                     },
                     "500": {
                         "description": "Error creating user",
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                }
-            }
-        },
-        "/usuarios/{id}": {
-            "put": {
-                "description": "Actualiza una tarea existente con los datos proporcionados",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "tareas"
-                ],
-                "summary": "Actualiza una tarea existente",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "Task ID",
-                        "name": "id",
-                        "in": "path",
-                        "required": true
-                    },
-                    {
-                        "description": "Task data",
-                        "name": "task",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/models.Task"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/models.Task"
-                        }
-                    },
-                    "400": {
-                        "description": "Invalid request payload",
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    "404": {
-                        "description": "Task not found",
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    "500": {
-                        "description": "Error updating task",
                         "schema": {
                             "type": "string"
                         }

@@ -11,19 +11,19 @@ services:
     volumes:
       - pgdata:/var/lib/postgresql/data
 
-  # backend:
-  #   build: .
-  #   container_name: go_tasks_api
-  #   depends_on:
-  #     - db
-  #   ports:
-  #     - "3000:3000"
-  #   environment:
-  #     DATABASE_URL: postgres://santi:mysecretpassword@db:5432/gorm?sslmode=disable
-  #     PORT: 3000
-  #   volumes:
-  #     - .:/app
-  #   restart: on-failure
+  backend:
+    build: .
+    container_name: go_tasks_api
+    depends_on:
+      - db
+    ports:
+      - "3000:3000"
+    environment:
+      PORT: 3000
+    volumes:
+      - .:/app
+    restart: on-failure
 
 volumes:
   pgdata:
+  

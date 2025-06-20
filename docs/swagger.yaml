@@ -119,6 +119,44 @@ paths:
       summary: Obtiene una tarea por su ID
       tags:
       - tareas
+    put:
+      consumes:
+      - application/json
+      description: Actualiza una tarea existente con los datos proporcionados
+      parameters:
+      - description: Task ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Task data
+        in: body
+        name: task
+        required: true
+        schema:
+          $ref: '#/definitions/models.Task'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Task'
+        "400":
+          description: Invalid request payload
+          schema:
+            type: string
+        "404":
+          description: Task not found
+          schema:
+            type: string
+        "500":
+          description: Error updating task
+          schema:
+            type: string
+      summary: Actualiza una tarea existente
+      tags:
+      - tareas
   /tasks:
     get:
       consumes:
@@ -326,45 +364,6 @@ paths:
       summary: Crea un nuevo usuario
       tags:
       - usuarios
-  /usuarios/{id}:
-    put:
-      consumes:
-      - application/json
-      description: Actualiza una tarea existente con los datos proporcionados
-      parameters:
-      - description: Task ID
-        in: path
-        name: id
-        required: true
-        type: string
-      - description: Task data
-        in: body
-        name: task
-        required: true
-        schema:
-          $ref: '#/definitions/models.Task'
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/models.Task'
-        "400":
-          description: Invalid request payload
-          schema:
-            type: string
-        "404":
-          description: Task not found
-          schema:
-            type: string
-        "500":
-          description: Error updating task
-          schema:
-            type: string
-      summary: Actualiza una tarea existente
-      tags:
-      - tareas
 schemes:
 - http
 swagger: "2.0"
