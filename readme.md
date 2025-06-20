@@ -13,7 +13,7 @@
 
 ## 📸 Vista Previa
 
-![preview](https://github.com/santigorbe/GO_REST_API.git)
+![preview](assets/CapturaSwagger.png)
 *Swagger UI integrado para una documentación interactiva*
 
 ---
